@@ -6,7 +6,7 @@ import {
   useCameraDevices,
   useFrameProcessor,
 } from 'react-native-vision-camera';
-import { labelImage } from 'vision-camera-image-labeler';
+import { labelImage } from 'vision-camera-object-detection';
 
 import { Label } from './components/Label';
 

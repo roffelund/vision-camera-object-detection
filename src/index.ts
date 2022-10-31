@@ -1,15 +1,19 @@
 /* globals __labelImage */
 import type { Frame } from 'react-native-vision-camera';
 
-interface ImageLabel {
+interface DetectedObject {
   /**
-   * A label describing the image, in english.
+   * A CGRect indicating the position of the object in the image.
    */
-  label: string;
+  frame: string;
   /**
-   * A floating point number from 0 to 1, describing the confidence (percentage).
+   * An integer that identifies the object across images, or `nil` in single image mode.
    */
-  confidence: number;
+  trackingId: number;
+  /**
+   * An array of labels describing the object returned by the detector. The property is empty if the detector option shouldEnableClassification is set to false.
+   */
+  labels: string[];
 }
 
 /**
@@ -17,8 +21,8 @@ interface ImageLabel {
  *
  * This algorithm executes within **~60ms**, so a frameRate of **16 FPS** perfectly allows the algorithm to run without dropping a frame. Anything higher might make video recording stutter, but works too.
  */
-export function labelImage(frame: Frame): ImageLabel[] {
+export function detectObjects(frame: Frame): DetectedObject[] {
   'worklet';
   // @ts-expect-error Frame Processors are not typed.
-  return __labelImage(frame);
+  return __detectObjects(frame);
 }
